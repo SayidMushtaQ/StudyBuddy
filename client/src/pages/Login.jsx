@@ -1,7 +1,8 @@
 import React, { useState, useRef } from "react";
-import OtpBox from "../components/OtpBox";
 import { handleBackSpaceAndEnterKEY } from "../util/HandleBackSpaceKey";
 import { HandleOtpInput } from "../util/HandleOtpInput";
+import FormST1 from "../components/login/form_st1";
+import FormST2 from "../components/login/form_st2";
 export default function Login({ onClose }) {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [otp, setOtp] = useState(new Array(4).fill(""));
@@ -34,65 +35,30 @@ export default function Login({ onClose }) {
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 text-gray-500 hover:text-red-600 text-xl font-bold"
+          className="absolute top-4 right-4 text-gray-500 hover:text-red-600 text-xl font-bold cursor-pointer"
         >
           ×
         </button>
 
         {/* Step 1: Phone Number Input */}
         {currentStep === 1 && (
-          <div>
-            <h2 className="text-3xl font-bold text-blue-800 text-center mb-6">
-              Login with Phone Number
-            </h2>
-            <form onSubmit={handlePhoneNumberSubmit} className="space-y-6">
-              <div>
-                <input
-                  type="text"
-                  name="phone"
-                  value={phoneNumber}
-                  onChange={handleChange}
-                  placeholder="Enter your phone number"
-                  className="w-full h-12 border border-blue-300 rounded-lg px-4 py-2"
-                  required
-                />
-              </div>
-              <button
-                type="submit"
-                className="w-full bg-blue-600 text-white py-3 rounded-xl shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
-              >
-                Send OTP
-              </button>
-            </form>
-          </div>
+          <FormST1
+            handlePhoneNumberSubmit={handlePhoneNumberSubmit}
+            phoneNumber={handleChange}
+            handleChange={handleChange}
+          />
         )}
 
         {/* Step 2: OTP Verification */}
         {currentStep === 2 && (
-          <div>
-            <h2 className="text-3xl font-bold text-blue-800 text-center mb-6">
-              Verify OTP
-            </h2>
-            <p className="text-center mb-6">
-              A 4-digit OTP has been sent to {phoneNumber}.
-            </p>
-            <form onSubmit={handleOtpSubmit} className="space-y-6">
-              <div className="grid grid-cols-4 gap-4">
-                <OtpBox
-                  otp={otp}
-                  handleBackSpaceAndEnterKEY={handleBackSpaceAndEnterKEY}
-                  handleChange={handleChange}
-                  otpBoxRef={otpBoxRef}
-                />
-              </div>
-              <button
-                type="submit"
-                className="w-full bg-blue-600 text-white py-3 rounded-xl shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
-              >
-                Verify OTP
-              </button>
-            </form>
-          </div>
+          <FormST2
+            otp={otp}
+            phoneNumber={phoneNumber}
+            handleOtpSubmit={handleOtpSubmit}
+            handleBackSpaceAndEnterKEY={handleBackSpaceAndEnterKEY}
+            handleChange={handleChange}
+            otpBoxRef={otpBoxRef}
+          />
         )}
       </div>
     </div>

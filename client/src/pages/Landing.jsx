@@ -38,7 +38,10 @@ export default function StudyBuddyLanding() {
           StudyBuddy connects students and teachers in one place to share notes,
           join communities, and grow collaboratively.
         </p>
-        <button className="mt-10 bg-blue-600 hover:bg-blue-700 text-white text-lg px-8 py-3 rounded-xl shadow-md cursor-pointer">
+        <button
+          className="mt-10 bg-blue-600 hover:bg-blue-700 text-white text-lg px-8 py-3 rounded-xl shadow-md cursor-pointer"
+          onClick={() => setShowSignup(true)}
+        >
           Get Started
         </button>
       </section>
