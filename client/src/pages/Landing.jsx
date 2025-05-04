@@ -1,15 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
+import Signup from "./Signup";
+import Login from "./Login";
 
 export default function StudyBuddyLanding() {
+  const [showSignup, setShowSignup] = useState(false);
+  const [showLogin, setShowLogin] = useState(false);
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-100 to-purple-200 flex flex-col items-center justify-start p-6">
       {/* Header */}
       <header className="w-full max-w-6xl mx-auto mt-10 flex justify-between items-center">
         <h1 className="text-3xl font-bold text-blue-900">StudyBuddy</h1>
         <nav className="space-x-4">
-          <button className="text-blue-700 hover:text-blue-900 cursor-pointer">Login</button>
-          <button className="text-blue-700 hover:text-blue-900 cursor-pointer">Signup</button>
+          <button
+            className="text-blue-700 hover:text-blue-900 cursor-pointer"
+            onClick={() => setShowLogin(true)}
+          >
+            Login
+          </button>
+          <button
+            className="text-blue-700 hover:text-blue-900 cursor-pointer"
+            onClick={() => setShowSignup(true)}
+          >
+            Signup
+          </button>
         </nav>
+        {showSignup && <Signup onClose={() => setShowSignup(false)} />}
+        {showLogin && <Login onClose={() => setShowLogin(false)} />}
       </header>
 
       {/* Hero Section */}
