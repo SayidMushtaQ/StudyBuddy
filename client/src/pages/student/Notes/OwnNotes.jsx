@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
-import Sidebar from "../../components/dashboard/student/ownNotes/sidebar";
-import Writer from '../../components/dashboard/student/ownNotes/writer'
+import Sidebar from "../../../components/dashboard/student/ownNotes/sidebar";
+import Writer from '../../../components/dashboard/student/ownNotes/writer'
 const colorOptions = [
   "bg-blue-100",
   "bg-blue-200",

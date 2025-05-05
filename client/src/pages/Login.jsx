@@ -1,8 +1,8 @@
 import React, { useState, useRef } from "react";
 import { handleBackSpaceAndEnterKEY } from "../util/HandleBackSpaceKey";
 import { HandleOtpInput } from "../util/HandleOtpInput";
-import FormST1 from "../components/login/form_st1";
-import FormST2 from "../components/login/form_st2";
+import FormST1 from "../components/auth/login/form_st1";
+import FormST2 from "../components/auth/login/form_st2";
 export default function Login({ onClose }) {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [otp, setOtp] = useState(new Array(4).fill(""));

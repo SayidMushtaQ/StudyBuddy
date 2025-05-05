@@ -1,9 +1,9 @@
 import { useState } from "react";
 
-import { dummyNotes } from "../../data/notesDummy";
-import Header from "../../components/dashboard/student/Notes/Header";
-import Topnav from "../../components/dashboard/student/Notes/Topnav";
-import NotesCards from "../../components/dashboard/student/Notes/NotesCards";
+import { dummyNotes } from "../../../data/notesDummy";
+import Header from "../../../components/dashboard/student/Notes/Header";
+import Topnav from "../../../components/dashboard/student/Notes/Topnav";
+import NotesCards from "../../../components/dashboard/student/Notes/NotesCards";
 
 export default function NotesDashboard() {
   const [notes] = useState(dummyNotes);

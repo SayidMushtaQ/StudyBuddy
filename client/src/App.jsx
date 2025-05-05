@@ -2,9 +2,9 @@ import LandingPage from "./pages/Landing";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from './pages/student/StudentHome'
 import DashboardLayout from './layouts/Dashboard'
-import Notes from "./pages/student/Notes";
-import CreateOwnNotes from "./pages/student/CreateOwnNotes";
-import ClassNotes from "./pages/student/classNotes";
+import Notes from "./pages/student/Notes/Index";
+import CreateOwnNotes from "./pages/student/Notes/OwnNotes";
+import ClassNotes from "./pages/student/Notes/ClassNotes";
 
 function App() {
   return (

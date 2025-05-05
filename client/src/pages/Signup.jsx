@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
-import FormST1 from "../components/signup/form_st1";
-import FormST2 from "../components/signup/form_st2";
-import FormST3 from "../components/signup/form_st3";
+import FormST1 from "../components/auth/signup/form_st1";
+import FormST2 from "../components/auth/signup/form_st2";
+import FormST3 from "../components/auth/signup/form_st3";
 import {handleBackSpaceAndEnterKEY} from '../util/HandleBackSpaceKey'
 import {HandleOtpInput} from '../util/HandleOtpInput'
 export default function Signup({ onClose }) {

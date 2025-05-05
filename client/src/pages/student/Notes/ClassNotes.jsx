@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import { dummyNotesCards } from "../../data/notesDummy";
-import ClassNotesSearch from "../../components/dashboard/student/classNotes/SearchBox";
-import ClassNotes from "../../components/dashboard/student/classNotes/Notes";
-import Pagination from "../../components/dashboard/student/classNotes/Pagination";
+import { dummyNotesCards } from "../../../data/notesDummy";
+import ClassNotesSearch from "../../../components/dashboard/student/classNotes/SearchBox";
+import ClassNotes from "../../../components/dashboard/student/classNotes/Notes";
+import Pagination from "../../../components/dashboard/student/classNotes/Pagination";
 export default function ClassNotesApp() {
   // Sample class notes data
   const [notes] = useState(dummyNotesCards);
