@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Search, Download, Filter, Book, GraduationCap, Calendar, Tag, X } from 'lucide-react';
+import { Search, Download, Filter, Book, GraduationCap, Calendar, Tag, X, ChevronLeft, ChevronRight } from 'lucide-react';
 
 export default function ClassNotesApp() {
   // Sample class notes data
@@ -81,6 +81,10 @@ export default function ClassNotesApp() {
   const [showFilterMenu, setShowFilterMenu] = useState(false);
   const [filtersApplied, setFiltersApplied] = useState(false);
 
+  // Pagination states
+  const [currentPage, setCurrentPage] = useState(1);
+  const [notesPerPage] = useState(3);
+
   // Extract unique values for filter options
   const subjects = [...new Set(notes.map(note => note.subject))];
   const teachers = [...new Set(notes.map(note => note.teacher))];
@@ -107,6 +111,34 @@ export default function ClassNotesApp() {
     
     return matchesSearch && matchesSubject && matchesTeacher;
   });
+  
+  // Calculate pagination
+  const indexOfLastNote = currentPage * notesPerPage;
+  const indexOfFirstNote = indexOfLastNote - notesPerPage;
+  const currentNotes = filteredNotes.slice(indexOfFirstNote, indexOfLastNote);
+  const totalPages = Math.ceil(filteredNotes.length / notesPerPage);
+
+  // Handle page changes
+  const goToPage = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
+  const goToPreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const goToNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  // Reset to first page when filters change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchTerm, activeFilters]);
   
   // Check if any filters are applied
   useEffect(() => {
@@ -149,6 +181,56 @@ export default function ClassNotesApp() {
       case 'pptx': return "📊";
       default: return "📁";
     }
+  };
+
+  // Generate array of page numbers for pagination
+  const getPageNumbers = () => {
+    const pageNumbers = [];
+    const maxPagesToShow = 5;
+    
+    if (totalPages <= maxPagesToShow) {
+      // Show all pages if total is less than max
+      for (let i = 1; i <= totalPages; i++) {
+        pageNumbers.push(i);
+      }
+    } else {
+      // Always show first page
+      pageNumbers.push(1);
+      
+      // Calculate start and end of page numbers to show
+      let startPage = Math.max(2, currentPage - 1);
+      let endPage = Math.min(totalPages - 1, currentPage + 1);
+      
+      // Adjust if at the beginning
+      if (currentPage <= 2) {
+        endPage = Math.min(totalPages - 1, 4);
+      }
+      
+      // Adjust if at the end
+      if (currentPage >= totalPages - 1) {
+        startPage = Math.max(2, totalPages - 3);
+      }
+      
+      // Add ellipsis if needed at the beginning
+      if (startPage > 2) {
+        pageNumbers.push('...');
+      }
+      
+      // Add middle pages
+      for (let i = startPage; i <= endPage; i++) {
+        pageNumbers.push(i);
+      }
+      
+      // Add ellipsis if needed at the end
+      if (endPage < totalPages - 1) {
+        pageNumbers.push('...');
+      }
+      
+      // Always show last page
+      pageNumbers.push(totalPages);
+    }
+    
+    return pageNumbers;
   };
 
   return (
@@ -279,8 +361,8 @@ export default function ClassNotesApp() {
 
         {/* Notes grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredNotes.length > 0 ? (
-            filteredNotes.map(note => (
+          {currentNotes.length > 0 ? (
+            currentNotes.map(note => (
               <div key={note.id} className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition">
                 <div className="p-6">
                   <div className="flex justify-between items-start">
@@ -346,6 +428,59 @@ export default function ClassNotesApp() {
             </div>
           )}
         </div>
+
+        {/* Pagination */}
+        {filteredNotes.length > 0 && (
+          <div className="mt-8 flex justify-center">
+            <div className="flex items-center bg-white px-4 py-2 rounded-xl shadow-md">
+              {/* Previous page button */}
+              <button 
+                onClick={goToPreviousPage}
+                disabled={currentPage === 1}
+                className={`p-2 rounded-lg ${currentPage === 1 ? 'text-gray-400 cursor-not-allowed' : 'text-blue-600 hover:bg-blue-100'}`}
+              >
+                <ChevronLeft size={20} />
+              </button>
+              
+              {/* Page numbers */}
+              <div className="flex items-center mx-2">
+                {getPageNumbers().map((page, index) => (
+                  page === '...' ? (
+                    <span key={`ellipsis-${index}`} className="px-2 text-blue-800">...</span>
+                  ) : (
+                    <button
+                      key={`page-${page}`}
+                      onClick={() => goToPage(page)}
+                      className={`w-8 h-8 mx-1 flex items-center justify-center rounded-full ${
+                        currentPage === page 
+                          ? 'bg-blue-600 text-white'
+                          : 'text-blue-800 hover:bg-blue-100'
+                      }`}
+                    >
+                      {page}
+                    </button>
+                  )
+                ))}
+              </div>
+              
+              {/* Next page button */}
+              <button 
+                onClick={goToNextPage}
+                disabled={currentPage === totalPages}
+                className={`p-2 rounded-lg ${currentPage === totalPages ? 'text-gray-400 cursor-not-allowed' : 'text-blue-600 hover:bg-blue-100'}`}
+              >
+                <ChevronRight size={20} />
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* Results counter */}
+        {filteredNotes.length > 0 && (
+          <div className="mt-4 text-center text-blue-700">
+            Showing {indexOfFirstNote + 1}-{Math.min(indexOfLastNote, filteredNotes.length)} of {filteredNotes.length} results
+          </div>
+        )}
       </main>
     </div>
   );
