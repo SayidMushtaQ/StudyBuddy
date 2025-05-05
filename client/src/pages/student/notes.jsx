@@ -1,36 +1,15 @@
-import { useState} from 'react';
+import { useState } from 'react';
 import { 
-  Notebook, BookOpen, Plus, Filter, Clock, 
-  BookMarked, Tag, CalendarDays, SortDesc, 
-  Grid, List, ChevronRight, PlusCircle 
+  Notebook, BookOpen, Clock, 
+  SortDesc, Grid, List, ChevronRight, PlusCircle 
 } from 'lucide-react';
+import { dummyNotes } from '../../data/notesDummy';
 
 export default function NotesDashboard() {
-  const [notes] = useState({
-    personal: [
-      { id: 1, title: 'Project Ideas', content: 'List of potential project ideas for the semester', date: '2025-05-01', category: 'Work', lastAccessed: '2025-05-04T14:30:00' },
-      { id: 2, title: 'Shopping List', content: 'Items to buy this weekend', date: '2025-05-03', category: 'Personal', lastAccessed: '2025-05-05T09:15:00' },
-      { id: 3, title: 'Workout Plan', content: 'Weekly exercise routine', date: '2025-04-28', category: 'Health', lastAccessed: '2025-05-03T18:45:00' },
-    ],
-    class: [
-      { id: 1, title: 'Data Structures', content: 'Notes on binary trees and graph algorithms', date: '2025-04-28', category: 'Computer Science', lastAccessed: '2025-05-05T10:20:00' },
-      { id: 2, title: 'Marketing Strategies', content: 'Digital marketing campaign planning', date: '2025-05-02', category: 'Business', lastAccessed: '2025-05-04T16:35:00' },
-      { id: 3, title: 'Calculus II', content: 'Integration techniques and applications', date: '2025-04-30', category: 'Mathematics', lastAccessed: '2025-05-02T11:50:00' },
-      { id: 4, title: 'Organic Chemistry', content: 'Reaction mechanisms and compounds', date: '2025-05-01', category: 'Science', lastAccessed: '2025-05-01T09:25:00' },
-    ]
-  });
+  const [notes] = useState(dummyNotes);
 
-  const [activeFilter, setActiveFilter] = useState('all');
   const [sortBy, setSortBy] = useState('recent');
   const [viewMode, setViewMode] = useState('grid');
-  
-  // All available tags/categories across both note types
-  const allTags = [
-    ...new Set([
-      ...notes.personal.map(note => note.category),
-      ...notes.class.map(note => note.category)
-    ])
-  ];
 
   // Get recently accessed notes (combined from both types)
   const getRecentlyAccessedNotes = () => {
@@ -44,26 +23,19 @@ export default function NotesDashboard() {
       .slice(0, 6); // Get top 6 recently accessed notes
   };
 
-  // Filter notes based on active filter
-  const getFilteredNotes = () => {
-    if (activeFilter === 'all') return getRecentlyAccessedNotes();
-    
-    return getRecentlyAccessedNotes().filter(note => note.category === activeFilter);
-  };
-
   // Get sorted notes based on sort criteria
   const getSortedNotes = () => {
-    const filtered = getFilteredNotes();
+    const notes = getRecentlyAccessedNotes();
     
     switch (sortBy) {
       case 'recent':
-        return filtered.sort((a, b) => new Date(b.lastAccessed) - new Date(a.lastAccessed));
+        return notes.sort((a, b) => new Date(b.lastAccessed) - new Date(a.lastAccessed));
       case 'oldest':
-        return filtered.sort((a, b) => new Date(a.lastAccessed) - new Date(b.lastAccessed));
+        return notes.sort((a, b) => new Date(a.lastAccessed) - new Date(b.lastAccessed));
       case 'alphabetical':
-        return filtered.sort((a, b) => a.title.localeCompare(b.title));
+        return notes.sort((a, b) => a.title.localeCompare(b.title));
       default:
-        return filtered;
+        return notes;
     }
   };
 
@@ -91,7 +63,6 @@ export default function NotesDashboard() {
     // In a real application, this would navigate to the note detail page
     // e.g., router.push(`/dashboard/notes/${note.type}/${note.id}`);
   };
-
 
   return (
     <div className="h-[85vh]">
@@ -121,21 +92,6 @@ export default function NotesDashboard() {
             <h2 className="text-xl font-semibold text-gray-800">Recently Accessed Notes</h2>
             
             <div className="flex flex-wrap items-center gap-2 mt-3 md:mt-0">
-              {/* Tag Filter */}
-              <div className="relative">
-                <select 
-                  className="pl-8 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-md text-gray-700 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                  value={activeFilter}
-                  onChange={(e) => setActiveFilter(e.target.value)}
-                >
-                  <option value="all">All Categories</option>
-                  {allTags.map(tag => (
-                    <option key={tag} value={tag}>{tag}</option>
-                  ))}
-                </select>
-                <Tag size={16} className="absolute left-2 top-2.5 text-gray-500" />
-              </div>
-
               {/* Sort Options */}
               <div className="relative">
                 <select 
@@ -214,7 +170,7 @@ export default function NotesDashboard() {
                       <div className="flex items-center text-xs text-gray-500 mt-1">
                         <span className="mr-2">{note.category}</span>
                         <span>•</span>
-                        <CalendarDays size={12} className="mx-2" />
+                        <Clock size={12} className="mx-2" />
                         <span>{formatDate(note.date)}</span>
                       </div>
                     </div>

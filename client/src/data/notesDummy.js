@@ -1,4 +1,4 @@
-export const dummyNotes = [
+export const dummyNotesCards = [
   {
     id: 1,
     title: "Introduction to Physics",
@@ -67,3 +67,66 @@ export const dummyNotes = [
     fileSize: "5.1 MB",
   },
 ];
+
+export const dummyNotes = {
+  personal: [
+    {
+      id: 1,
+      title: "Project Ideas",
+      content: "List of potential project ideas for the semester",
+      date: "2025-05-01",
+      category: "Work",
+      lastAccessed: "2025-05-04T14:30:00",
+    },
+    {
+      id: 2,
+      title: "Shopping List",
+      content: "Items to buy this weekend",
+      date: "2025-05-03",
+      category: "Personal",
+      lastAccessed: "2025-05-05T09:15:00",
+    },
+    {
+      id: 3,
+      title: "Workout Plan",
+      content: "Weekly exercise routine",
+      date: "2025-04-28",
+      category: "Health",
+      lastAccessed: "2025-05-03T18:45:00",
+    },
+  ],
+  class: [
+    {
+      id: 1,
+      title: "Data Structures",
+      content: "Notes on binary trees and graph algorithms",
+      date: "2025-04-28",
+      category: "Computer Science",
+      lastAccessed: "2025-05-05T10:20:00",
+    },
+    {
+      id: 2,
+      title: "Marketing Strategies",
+      content: "Digital marketing campaign planning",
+      date: "2025-05-02",
+      category: "Business",
+      lastAccessed: "2025-05-04T16:35:00",
+    },
+    {
+      id: 3,
+      title: "Calculus II",
+      content: "Integration techniques and applications",
+      date: "2025-04-30",
+      category: "Mathematics",
+      lastAccessed: "2025-05-02T11:50:00",
+    },
+    {
+      id: 4,
+      title: "Organic Chemistry",
+      content: "Reaction mechanisms and compounds",
+      date: "2025-05-01",
+      category: "Science",
+      lastAccessed: "2025-05-01T09:25:00",
+    },
+  ],
+};
