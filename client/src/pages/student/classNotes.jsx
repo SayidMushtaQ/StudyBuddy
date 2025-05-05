@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Search, Download, Filter, Book, GraduationCap, Calendar, Tag, ChevronDown, X } from 'lucide-react';
+import { Search, Download, Filter, Book, GraduationCap, Calendar, Tag, X } from 'lucide-react';
 
 export default function ClassNotesApp() {
   // Sample class notes data
@@ -10,8 +10,8 @@ export default function ClassNotesApp() {
       teacher: "Dr. Smith",
       subject: "Physics",
       date: "2025-05-01",
-      description: "Fundamental concepts of classical mechanics including Newton's laws, energy conservation, and momentum.",
-      tags: ["mechanics", "newton", "fundamentals"],
+      description: "Fundamental concepts of classical mechanics including Newton's laws.",
+      tags: ["mechanics", "newton"],
       fileType: "pdf",
       fileSize: "2.4 MB"
     },
@@ -21,8 +21,8 @@ export default function ClassNotesApp() {
       teacher: "Prof. Johnson",
       subject: "Chemistry",
       date: "2025-04-28",
-      description: "Structure, nomenclature, and reactions of alkenes and alkynes, including addition reactions and stereochemistry.",
-      tags: ["organic", "reactions", "hydrocarbons"],
+      description: "Structure and reactions of alkenes and alkynes.",
+      tags: ["organic", "hydrocarbons"],
       fileType: "pdf",
       fileSize: "3.8 MB"
     },
@@ -32,8 +32,8 @@ export default function ClassNotesApp() {
       teacher: "Ms. Williams",
       subject: "Literature",
       date: "2025-04-25",
-      description: "In-depth analysis of the main characters in Hamlet, focusing on motivations and psychological aspects.",
-      tags: ["shakespeare", "characters", "tragedy"],
+      description: "Analysis of the main characters in Hamlet.",
+      tags: ["shakespeare", "tragedy"],
       fileType: "docx",
       fileSize: "1.7 MB"
     },
@@ -43,8 +43,8 @@ export default function ClassNotesApp() {
       teacher: "Dr. Chen",
       subject: "Mathematics",
       date: "2025-04-20",
-      description: "Advanced techniques for integration, including substitution, parts, and trigonometric identities.",
-      tags: ["calculus", "integration", "advanced"],
+      description: "Advanced techniques for integration.",
+      tags: ["calculus", "integration"],
       fileType: "pdf",
       fileSize: "4.2 MB"
     },
@@ -54,8 +54,8 @@ export default function ClassNotesApp() {
       teacher: "Mr. Davis",
       subject: "History",
       date: "2025-04-15",
-      description: "Overview of major events and strategic decisions in the Pacific Theater during World War II.",
-      tags: ["wwii", "pacific", "military"],
+      description: "Overview of major events in the Pacific Theater.",
+      tags: ["wwii", "pacific"],
       fileType: "pptx",
       fileSize: "8.5 MB"
     },
@@ -65,53 +65,25 @@ export default function ClassNotesApp() {
       teacher: "Dr. Patel",
       subject: "Biology",
       date: "2025-04-10",
-      description: "Detailed exploration of eukaryotic cell structure, organelle functions, and cellular processes.",
-      tags: ["cells", "organelles", "eukaryotes"],
+      description: "Exploration of eukaryotic cell structure.",
+      tags: ["cells", "organelles"],
       fileType: "pdf",
       fileSize: "5.1 MB"
-    },
-    {
-      id: 7,
-      title: "Python Programming: Data Structures",
-      teacher: "Prof. Garcia",
-      subject: "Computer Science",
-      date: "2025-04-05",
-      description: "Implementation and application of lists, dictionaries, sets, and tuples in Python programming.",
-      tags: ["python", "data structures", "programming"],
-      fileType: "ipynb",
-      fileSize: "1.2 MB"
-    },
-    {
-      id: 8,
-      title: "Classical Conditioning",
-      teacher: "Dr. Thompson",
-      subject: "Psychology",
-      date: "2025-04-01",
-      description: "Principles of classical conditioning, including Pavlov's experiments and applications in behavioral therapy.",
-      tags: ["conditioning", "behavior", "pavlov"],
-      fileType: "pdf",
-      fileSize: "2.9 MB"
     }
   ]);
 
-  // Search, filter, and pagination states
+  // Search and filter states
   const [searchTerm, setSearchTerm] = useState('');
   const [activeFilters, setActiveFilters] = useState({
     subjects: [],
-    teachers: [],
-    tags: [],
-    fileTypes: []
+    teachers: []
   });
   const [showFilterMenu, setShowFilterMenu] = useState(false);
   const [filtersApplied, setFiltersApplied] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [notesPerPage, setNotesPerPage] = useState(6);
 
   // Extract unique values for filter options
   const subjects = [...new Set(notes.map(note => note.subject))];
   const teachers = [...new Set(notes.map(note => note.teacher))];
-  const allTags = [...new Set(notes.flatMap(note => note.tags))];
-  const fileTypes = [...new Set(notes.map(note => note.fileType))];
 
   // Filter notes based on search term and active filters
   const filteredNotes = notes.filter(note => {
@@ -121,8 +93,7 @@ export default function ClassNotesApp() {
       note.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       note.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
       note.teacher.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      note.subject.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      note.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()));
+      note.subject.toLowerCase().includes(searchTerm.toLowerCase());
     
     // Subject filter
     const matchesSubject = 
@@ -134,63 +105,14 @@ export default function ClassNotesApp() {
       activeFilters.teachers.length === 0 || 
       activeFilters.teachers.includes(note.teacher);
     
-    // Tags filter
-    const matchesTags = 
-      activeFilters.tags.length === 0 || 
-      note.tags.some(tag => activeFilters.tags.includes(tag));
-    
-    // File type filter
-    const matchesFileType = 
-      activeFilters.fileTypes.length === 0 || 
-      activeFilters.fileTypes.includes(note.fileType);
-    
-    return matchesSearch && matchesSubject && matchesTeacher && matchesTags && matchesFileType;
+    return matchesSearch && matchesSubject && matchesTeacher;
   });
   
-  // Pagination calculations
-  const totalPages = Math.ceil(filteredNotes.length / notesPerPage);
-  const indexOfLastNote = currentPage * notesPerPage;
-  const indexOfFirstNote = indexOfLastNote - notesPerPage;
-  const currentNotes = filteredNotes.slice(indexOfFirstNote, indexOfLastNote);
-  
-  // Reset to first page when filters change
+  // Check if any filters are applied
   useEffect(() => {
-    setCurrentPage(1);
-  }, [searchTerm, activeFilters]);
-  
-  // Page change handler
-  const paginate = (pageNumber) => {
-    setCurrentPage(pageNumber);
-    // Scroll to top when page changes
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-  
-  // Generate page numbers array
-  const getPageNumbers = () => {
-    const pageNumbers = [];
-    
-    // Always show first page
-    pageNumbers.push(1);
-    
-    // Current page neighborhood
-    for (let i = Math.max(2, currentPage - 1); i <= Math.min(currentPage + 1, totalPages - 1); i++) {
-      pageNumbers.push(i);
-    }
-    
-    // Always show last page for large sets
-    if (totalPages > 1) {
-      pageNumbers.push(totalPages);
-    }
-    
-    // Add ellipsis markers
-    return pageNumbers.reduce((acc, page, index, array) => {
-      acc.push(page);
-      if (index < array.length - 1 && array[index + 1] - page > 1) {
-        acc.push('...');
-      }
-      return acc;
-    }, []);
-  };
+    const hasActiveFilters = Object.values(activeFilters).some(arr => arr.length > 0);
+    setFiltersApplied(hasActiveFilters);
+  }, [activeFilters]);
 
   // Toggle filter value
   const toggleFilter = (category, value) => {
@@ -205,56 +127,41 @@ export default function ClassNotesApp() {
     });
   };
 
-  // Check if any filters are applied
-  useEffect(() => {
-    const hasActiveFilters = Object.values(activeFilters).some(arr => arr.length > 0);
-    setFiltersApplied(hasActiveFilters);
-  }, [activeFilters]);
-
   // Clear all filters
   const clearAllFilters = () => {
     setActiveFilters({
       subjects: [],
-      teachers: [],
-      tags: [],
-      fileTypes: []
+      teachers: []
     });
     setSearchTerm('');
   };
 
   // Handle download
   const handleDownload = (noteId) => {
-    // In a real application, this would initiate a file download
     alert(`Downloading note with ID: ${noteId}`);
   };
 
   // Get file icon based on file type
   const getFileIcon = (fileType) => {
     switch (fileType.toLowerCase()) {
-      case 'pdf':
-        return "📄";
-      case 'docx':
-        return "📝";
-      case 'pptx':
-        return "📊";
-      case 'ipynb':
-        return "📓";
-      default:
-        return "📁";
+      case 'pdf': return "📄";
+      case 'docx': return "📝";
+      case 'pptx': return "📊";
+      default: return "📁";
     }
   };
 
   return (
-    <div className="h-[80vh]">
+    <div className="h-full">
       <main className="container mx-auto py-8 px-4">
-        <div className="bg-white/90 rounded-xl shadow-md p-6 mb-8">
+        <div className="bg-white rounded-xl shadow-md p-6 mb-8">
           <div className="flex flex-col md:flex-row gap-4 items-center">
             {/* Search */}
             <div className="relative flex-grow">
               <input
                 type="text"
-                className="w-full pl-10 pr-4 py-3 rounded-xl border border-purple-200 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
-                placeholder="Search notes by title, description, teacher..."
+                className="w-full pl-10 pr-4 py-3 rounded-xl border border-purple-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Search notes..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
@@ -272,7 +179,7 @@ export default function ClassNotesApp() {
             {/* Filter button */}
             <div className="relative">
               <button 
-                className={`flex items-center justify-center px-6 py-3 rounded-xl transition shadow-md ${
+                className={`flex items-center justify-center px-6 py-3 rounded-xl ${
                   filtersApplied 
                     ? 'bg-purple-600 hover:bg-purple-700 text-white' 
                     : 'bg-blue-600 hover:bg-blue-700 text-white'
@@ -285,7 +192,7 @@ export default function ClassNotesApp() {
 
               {/* Filter dropdown menu */}
               {showFilterMenu && (
-                <div className="absolute right-0 mt-2 w-72 md:w-96 bg-white rounded-xl shadow-lg z-10 p-4">
+                <div className="absolute right-0 mt-2 w-72 bg-white rounded-xl shadow-lg z-10 p-4">
                   <div className="flex justify-between items-center mb-4">
                     <h3 className="font-bold text-blue-800">Filters</h3>
                     <button 
@@ -335,46 +242,6 @@ export default function ClassNotesApp() {
                       ))}
                     </div>
                   </div>
-                  
-                  {/* Tags filters */}
-                  <div className="mb-4">
-                    <h4 className="font-semibold text-blue-700 mb-2">Tags</h4>
-                    <div className="flex flex-wrap gap-2">
-                      {allTags.map(tag => (
-                        <button
-                          key={tag}
-                          className={`px-3 py-1 text-sm rounded-full ${
-                            activeFilters.tags.includes(tag)
-                              ? 'bg-blue-600 text-white'
-                              : 'bg-blue-100 text-blue-800 hover:bg-blue-200'
-                          }`}
-                          onClick={() => toggleFilter('tags', tag)}
-                        >
-                          {tag}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                  
-                  {/* File type filters */}
-                  <div className="mb-2">
-                    <h4 className="font-semibold text-blue-700 mb-2">File Type</h4>
-                    <div className="flex flex-wrap gap-2">
-                      {fileTypes.map(fileType => (
-                        <button
-                          key={fileType}
-                          className={`px-3 py-1 text-sm rounded-full ${
-                            activeFilters.fileTypes.includes(fileType)
-                              ? 'bg-blue-600 text-white'
-                              : 'bg-blue-100 text-blue-800 hover:bg-blue-200'
-                          }`}
-                          onClick={() => toggleFilter('fileTypes', fileType)}
-                        >
-                          {fileType.toUpperCase()}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
                 </div>
               )}
             </div>
@@ -412,8 +279,8 @@ export default function ClassNotesApp() {
 
         {/* Notes grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {currentNotes.length > 0 ? (
-            currentNotes.map(note => (
+          {filteredNotes.length > 0 ? (
+            filteredNotes.map(note => (
               <div key={note.id} className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition">
                 <div className="p-6">
                   <div className="flex justify-between items-start">
@@ -456,7 +323,7 @@ export default function ClassNotesApp() {
                   </div>
                   
                   <button 
-                    className="mt-4 w-full flex items-center justify-center bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-xl transition shadow-sm"
+                    className="mt-4 w-full flex items-center justify-center bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-xl transition"
                     onClick={() => handleDownload(note.id)}
                   >
                     <Download size={16} className="mr-2" />
@@ -471,7 +338,7 @@ export default function ClassNotesApp() {
               <h3 className="text-2xl font-bold text-blue-800 mb-2">No notes found</h3>
               <p className="text-blue-700">Try changing your search or filter criteria</p>
               <button 
-                className="mt-4 px-6 py-3 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition shadow-md"
+                className="mt-4 px-6 py-3 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition"
                 onClick={clearAllFilters}
               >
                 Clear all filters
@@ -479,82 +346,6 @@ export default function ClassNotesApp() {
             </div>
           )}
         </div>
-        
-        {/* Pagination */}
-        {filteredNotes.length > 0 && totalPages > 1 && (
-          <div className="mt-10 flex flex-col items-center">
-            <div className="flex flex-wrap justify-center items-center gap-2">
-              {/* Previous button */}
-              <button
-                onClick={() => paginate(Math.max(1, currentPage - 1))}
-                disabled={currentPage === 1}
-                className={`px-3 py-2 rounded-lg flex items-center ${
-                  currentPage === 1 
-                    ? 'bg-gray-100 text-gray-400 cursor-not-allowed' 
-                    : 'bg-blue-100 text-blue-700 hover:bg-blue-200'
-                }`}
-              >
-                <ChevronDown className="rotate-90 mr-1" size={16} />
-                Prev
-              </button>
-              
-              {/* Page numbers */}
-              {getPageNumbers().map((page, index) => (
-                page === '...' ? (
-                  <span key={`ellipsis-${index}`} className="px-3 py-2">...</span>
-                ) : (
-                  <button
-                    key={page}
-                    onClick={() => paginate(page)}
-                    className={`w-10 h-10 rounded-lg ${
-                      currentPage === page
-                        ? 'bg-blue-600 text-white font-bold'
-                        : 'bg-blue-100 text-blue-700 hover:bg-blue-200'
-                    }`}
-                  >
-                    {page}
-                  </button>
-                )
-              ))}
-              
-              {/* Next button */}
-              <button
-                onClick={() => paginate(Math.min(totalPages, currentPage + 1))}
-                disabled={currentPage === totalPages}
-                className={`px-3 py-2 rounded-lg flex items-center ${
-                  currentPage === totalPages
-                    ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                    : 'bg-blue-100 text-blue-700 hover:bg-blue-200'
-                }`}
-              >
-                Next
-                <ChevronDown className="-rotate-90 ml-1" size={16} />
-              </button>
-            </div>
-            
-            <div className="mt-3 text-sm text-blue-700">
-              Showing {indexOfFirstNote + 1}-{Math.min(indexOfLastNote, filteredNotes.length)} of {filteredNotes.length} notes
-            </div>
-            
-            {/* Notes per page selector */}
-            <div className="mt-4 flex items-center gap-2">
-              <span className="text-sm text-blue-700">Notes per page:</span>
-              <select
-                value={notesPerPage}
-                onChange={(e) => {
-                  setNotesPerPage(Number(e.target.value));
-                  setCurrentPage(1); // Reset to first page when changing items per page
-                }}
-                className="bg-white border border-purple-200 text-blue-700 rounded-lg py-1 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              >
-                <option value="3">3</option>
-                <option value="6">6</option>
-                <option value="9">9</option>
-                <option value="12">12</option>
-              </select>
-            </div>
-          </div>
-        )}
       </main>
     </div>
   );
