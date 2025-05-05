@@ -22,11 +22,11 @@ export default function NotesApp() {
   
   const colorOptions = [
     'bg-blue-100',
-    'bg-green-100',
-    'bg-yellow-100',
-    'bg-red-100',
+    'bg-blue-200',
     'bg-purple-100',
-    'bg-pink-100',
+    'bg-purple-200',
+    'bg-indigo-100',
+    'bg-indigo-200',
   ];
 
   // Save notes to localStorage whenever they change
@@ -105,42 +105,42 @@ export default function NotesApp() {
   };
 
   return (
-    <div className="flex flex-col md:flex-row h-screen bg-gray-50">
+    <div className="flex flex-col md:flex-row h-[80vh] bg-gradient-to-br from-blue-100 to-purple-200">
       {/* Sidebar */}
-      <div className="w-full md:w-64 bg-white border-r border-gray-200 flex flex-col">
-        <div className="p-4 border-b border-gray-200">
-          <h1 className="text-2xl font-bold text-gray-800 flex items-center">
-            <Book className="mr-2" size={24} />
+      <div className="w-full md:w-72 bg-white/90 border-r border-purple-100 flex flex-col">
+        <div className="p-6 border-b border-purple-100">
+          <h1 className="text-3xl font-bold text-blue-800 flex items-center">
+            <Book className="mr-3" size={28} />
             Notes
           </h1>
-          <div className="mt-4 relative">
+          <div className="mt-6 relative">
             <input
-              className="w-full pl-8 pr-2 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full pl-10 pr-3 py-3 rounded-xl border border-purple-200 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
               placeholder="Search notes..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
-            <Search className="absolute left-2 top-2.5 text-gray-400" size={18} />
+            <Search className="absolute left-3 top-3.5 text-blue-400" size={20} />
           </div>
           <button 
-            className="mt-3 w-full flex items-center justify-center bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition"
+            className="mt-5 w-full flex items-center justify-center bg-blue-600 hover:bg-blue-700 text-white px-4 py-3 rounded-xl transition shadow-md"
             onClick={addNewNote}
           >
-            <Plus size={18} className="mr-1" />
+            <Plus size={20} className="mr-2" />
             New Note
           </button>
         </div>
 
-        <div className="flex items-center px-4 py-2 bg-gray-100 border-b border-gray-200">
+        <div className="flex items-center px-6 py-3 bg-blue-50 border-b border-purple-100">
           <button
-            className="flex items-center text-sm text-gray-600 hover:text-blue-600"
+            className="flex items-center text-sm text-blue-700 hover:text-blue-800"
             onClick={() => {
               setSortBy('title');
               toggleSortOrder();
             }}
           >
             Sort by {sortBy === 'title' ? 'Title' : 'Date'}
-            <ArrowUpDown size={16} className="ml-1" />
+            <ArrowUpDown size={16} className="ml-2" />
           </button>
         </div>
 
@@ -149,13 +149,13 @@ export default function NotesApp() {
             sortedNotes.map(note => (
               <div 
                 key={note.id}
-                className={`p-3 border-b border-gray-200 cursor-pointer ${note.color} ${activeNoteId === note.id ? 'border-l-4 border-l-blue-500' : ''}`}
+                className={`p-4 m-3 border-b border-purple-100 cursor-pointer ${note.color} rounded-lg shadow-sm transition hover:shadow-md ${activeNoteId === note.id ? 'border-l-4 border-l-blue-600' : ''}`}
                 onClick={() => setActiveNoteId(note.id)}
               >
                 <div className="flex justify-between items-start">
-                  <h3 className="font-medium text-gray-800 truncate">{note.title}</h3>
+                  <h3 className="font-semibold text-blue-800 truncate">{note.title}</h3>
                   <button 
-                    className="text-gray-400 hover:text-red-500 p-1"
+                    className="text-purple-400 hover:text-purple-700 p-1 rounded-full hover:bg-purple-100"
                     onClick={(e) => {
                       e.stopPropagation();
                       deleteNote(note.id);
@@ -164,12 +164,12 @@ export default function NotesApp() {
                     <Trash2 size={16} />
                   </button>
                 </div>
-                <p className="text-sm text-gray-500 mt-1 truncate">{note.content}</p>
-                <p className="text-xs text-gray-400 mt-1">{formatDate(note.date)}</p>
+                <p className="text-sm text-blue-700 mt-2 truncate">{note.content}</p>
+                <p className="text-xs text-purple-500 mt-2">{formatDate(note.date)}</p>
               </div>
             ))
           ) : (
-            <p className="p-4 text-gray-500 text-center">No notes found.</p>
+            <p className="p-6 text-blue-700 text-center">No notes found.</p>
           )}
         </div>
       </div>
@@ -178,22 +178,22 @@ export default function NotesApp() {
       <div className="flex-grow flex flex-col p-0 overflow-hidden">
         {activeNote ? (
           <>
-            <div className="p-4 border-b border-gray-200 bg-white">
+            <div className="p-6 border-b border-purple-100 bg-white/90 shadow-sm">
               <input
-                className="w-full text-xl font-semibold mb-2 px-2 py-1 border border-transparent rounded focus:outline-none focus:border-gray-300"
+                className="w-full text-2xl font-bold mb-4 px-4 py-2 border border-transparent rounded-xl focus:outline-none focus:border-purple-200 text-blue-800"
                 value={activeNote.title}
                 onChange={(e) => updateNote('title', e.target.value)}
                 placeholder="Note title"
               />
-              <div className="flex items-center text-sm text-gray-500">
+              <div className="flex flex-wrap items-center text-sm text-blue-700">
                 <span>Last edited: {formatDate(activeNote.date)}</span>
-                <div className="ml-4 flex items-center">
-                  <span className="mr-2">Color:</span>
-                  <div className="flex space-x-1">
+                <div className="ml-6 flex items-center">
+                  <span className="mr-3">Color:</span>
+                  <div className="flex space-x-2">
                     {colorOptions.map(color => (
                       <button
                         key={color}
-                        className={`w-5 h-5 rounded-full ${color} border ${activeNote.color === color ? 'border-gray-800' : 'border-gray-300'}`}
+                        className={`w-6 h-6 rounded-full ${color} border shadow-sm ${activeNote.color === color ? 'border-blue-800 ring-2 ring-blue-400' : 'border-purple-200'}`}
                         onClick={() => updateNote('color', color)}
                       />
                     ))}
@@ -202,21 +202,22 @@ export default function NotesApp() {
               </div>
             </div>
             <textarea
-              className="flex-grow w-full p-4 text-gray-800 bg-white resize-none focus:outline-none"
+              className="flex-grow w-full p-6 text-blue-800 bg-white/80 resize-none focus:outline-none shadow-inner"
               value={activeNote.content}
               onChange={(e) => updateNote('content', e.target.value)}
               placeholder="Start typing your note here..."
             />
           </>
         ) : (
-          <div className="flex-grow flex flex-col items-center justify-center text-gray-500">
-            <Book size={64} className="mb-4 text-gray-300" />
-            <p className="text-xl">Select a note or create a new one</p>
+          <div className="flex-grow flex flex-col items-center justify-center text-blue-700">
+            <Book size={80} className="mb-6 text-purple-300" />
+            <p className="text-2xl font-bold text-blue-800 mb-2">Select a note or create a new one</p>
+            <p className="text-blue-700 mb-6">Your thoughts deserve a beautiful home</p>
             <button 
-              className="mt-4 flex items-center justify-center bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition"
+              className="mt-4 flex items-center justify-center bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl transition shadow-md"
               onClick={addNewNote}
             >
-              <Plus size={18} className="mr-1" />
+              <Plus size={20} className="mr-2" />
               New Note
             </button>
           </div>
