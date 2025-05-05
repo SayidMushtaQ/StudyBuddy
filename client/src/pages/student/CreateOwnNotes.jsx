@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import { Plus, Book } from "lucide-react";
+
 import Sidebar from "../../components/dashboard/student/ownNotes/sidebar";
-import Writer from "../../components/dashboard/student/ownNotes/writer";
+import Writer from '../../components/dashboard/student/ownNotes/writer'
 const colorOptions = [
   "bg-blue-100",
   "bg-blue-200",
@@ -10,6 +10,7 @@ const colorOptions = [
   "bg-indigo-100",
   "bg-indigo-200",
 ];
+
 export default function NotesApp() {
   const [notes, setNotes] = useState(() => {
     const savedNotes = localStorage.getItem("notes");
@@ -31,8 +32,6 @@ export default function NotesApp() {
   const [searchTerm, setSearchTerm] = useState("");
   const [sortBy, setSortBy] = useState("date"); // 'date' or 'title'
   const [sortOrder, setSortOrder] = useState("desc"); // 'asc' or 'desc'
-
-
 
   // Save notes to localStorage whenever they change
   useEffect(() => {
@@ -135,31 +134,13 @@ export default function NotesApp() {
 
       {/* Main content */}
       <div className="flex-grow flex flex-col p-0 overflow-hidden">
-        {activeNote ? (
-          <Writer
-            activeNote={activeNote}
-            updateNote={updateNote}
-            formatDate={formatDate}
-            colorOptions={colorOptions}
-          />
-        ) : (
-          <div className="flex-grow flex flex-col items-center justify-center text-blue-700">
-            <Book size={80} className="mb-6 text-purple-300" />
-            <p className="text-2xl font-bold text-blue-800 mb-2">
-              Select a note or create a new one
-            </p>
-            <p className="text-blue-700 mb-6">
-              Your thoughts deserve a beautiful home
-            </p>
-            <button
-              className="mt-4 flex items-center justify-center bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl transition shadow-md"
-              onClick={addNewNote}
-            >
-              <Plus size={20} className="mr-2" />
-              New Note
-            </button>
-          </div>
-        )}
+        <Writer
+          activeNote={activeNote}
+          updateNote={updateNote}
+          formatDate={formatDate}
+          colorOptions={colorOptions}
+          addNewNote={addNewNote}
+        />
       </div>
     </div>
   );
