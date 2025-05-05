@@ -18,12 +18,23 @@ export default function Sidebar() {
 
   const navItems = [
     { name: "Home", icon: <Home />, to: "/student" },
-    { name: "Notes", icon: <BookOpen />, to: "/student/notes", sub: [
-      { name: "Create Own Notes", to: "/student/notes/create", icon: <FilePlus /> },
-      { name: "Class Notes", to: "/student/notes/class", icon: <ClipboardList /> }
-    ] },
-    { name: "Communities", icon: <Users />, to: "/student/communities" },
-    { name: "Chat", icon: <MessageCircle />, to: "/student/chat" },
+    {
+      name: "Notes",
+      icon: <BookOpen />,
+      to: "/student/notes",
+      sub: [
+        {
+          name: "Create Own Notes",
+          to: "/student/notes/create",
+          icon: <FilePlus />,
+        },
+        {
+          name: "Class Notes",
+          to: "/student/notes/class",
+          icon: <ClipboardList />,
+        },
+      ],
+    },
   ];
 
   return (
@@ -57,20 +68,22 @@ export default function Sidebar() {
               </Link>
 
               {/* Sub-items under Notes */}
-              {!collapsed && item.sub && location.pathname.startsWith("/student/notes") && (
-                <div className="ml-8 mt-1 space-y-1">
-                  {item.sub.map((subItem) => (
-                    <Link
-                      to={subItem.to}
-                      key={subItem.name}
-                      className="flex items-center gap-2 text-sm text-blue-700 px-2 py-1 rounded-lg hover:bg-blue-50"
-                    >
-                      {subItem.icon}
-                      <span>{subItem.name}</span>
-                    </Link>
-                  ))}
-                </div>
-              )}
+              {!collapsed &&
+                item.sub &&
+                location.pathname.startsWith("/student/notes") && (
+                  <div className="ml-8 mt-1 space-y-1">
+                    {item.sub.map((subItem) => (
+                      <Link
+                        to={subItem.to}
+                        key={subItem.name}
+                        className="flex items-center gap-2 text-sm text-blue-700 px-2 py-1 rounded-lg hover:bg-blue-50"
+                      >
+                        {subItem.icon}
+                        <span>{subItem.name}</span>
+                      </Link>
+                    ))}
+                  </div>
+                )}
             </div>
           ))}
         </nav>

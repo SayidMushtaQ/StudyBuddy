@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Index() {
+export default function Home() {
   return (
     <main className="flex-1 p-8">
       <div className="max-w-7xl mx-auto">
@@ -14,7 +14,7 @@ export default function Index() {
         </p>
 
         {/* Dashboard Content - Notes and Communities */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2  gap-6">
           {/* Notes Card */}
           <div className="bg-white p-6 rounded-2xl shadow-lg">
             <h2 className="text-xl font-semibold text-blue-800 mb-4">
@@ -26,20 +26,6 @@ export default function Index() {
             </p>
             <button className="bg-blue-600 text-white py-2 px-4 rounded-xl hover:bg-blue-700">
               View Notes
-            </button>
-          </div>
-
-          {/* Communities Card */}
-          <div className="bg-white p-6 rounded-2xl shadow-lg">
-            <h2 className="text-xl font-semibold text-blue-800 mb-4">
-              Communities
-            </h2>
-            <p className="text-blue-700 mb-4">
-              Join student communities, participate in discussions, and share
-              ideas with your peers.
-            </p>
-            <button className="bg-blue-600 text-white py-2 px-4 rounded-xl hover:bg-blue-700">
-              Join Communities
             </button>
           </div>
 
