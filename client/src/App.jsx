@@ -9,6 +9,7 @@ import ClassNotes from "./pages/student/Notes/ClassNotes";
 
 import TeacherHome from "./pages/teacher";
 import UploadNotes from "./pages/teacher/UploadNotes";
+import MakeAnnouncement from "./pages/teacher/MakeAnnouncement";
 
 function App() {
   return (
@@ -23,7 +24,7 @@ function App() {
         <Route path="/teacher" element={<TeacherDashboard />}>
           <Route index element={<TeacherHome />} />
           <Route  path="/teacher/upload-notes" element={<UploadNotes />} />
-          <Route  path="/teacher/make-announcement" element={<TeacherHome />} />
+          <Route  path="/teacher/make-announcement" element={<MakeAnnouncement />} />
         </Route>
         <Route path="/" element={<LandingPage />} />
       </Routes>
