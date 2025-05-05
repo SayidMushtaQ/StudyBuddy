@@ -14,8 +14,8 @@ export default function Sidebar() {
 
   const navItems = [
     { name: "Home", icon: <Home />, to: "/teacher" },
-    { name: "Upload Notes", icon: <Upload />, to: "/teacher/upload" },
-    { name: "Make Announcement", icon: <MessageSquare />, to: "/teacher/upload" },
+    { name: "Upload Notes", icon: <Upload />, to: "/teacher/upload-notes" },
+    { name: "Make Announcement", icon: <MessageSquare />, to: "/teacher/make-announcement" },
   ];
 
   return (

@@ -8,6 +8,7 @@ import CreateOwnNotes from "./pages/student/Notes/OwnNotes";
 import ClassNotes from "./pages/student/Notes/ClassNotes";
 
 import TeacherHome from "./pages/teacher";
+import UploadNotes from "./pages/teacher/UploadNotes";
 
 function App() {
   return (
@@ -21,6 +22,8 @@ function App() {
         </Route>
         <Route path="/teacher" element={<TeacherDashboard />}>
           <Route index element={<TeacherHome />} />
+          <Route  path="/teacher/upload-notes" element={<UploadNotes />} />
+          <Route  path="/teacher/make-announcement" element={<TeacherHome />} />
         </Route>
         <Route path="/" element={<LandingPage />} />
       </Routes>
