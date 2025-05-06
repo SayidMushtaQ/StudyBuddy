@@ -10,6 +10,7 @@ export default function Login({ onClose }) {
   const otpBoxRef = useRef([]);
 
   const handleChange = (e, index) => {
+    console.log(e.target.value)
     if (e.target.name === "otp") {
       HandleOtpInput(e, otp, index, setOtp, otpBoxRef);
     } else {
@@ -44,7 +45,7 @@ export default function Login({ onClose }) {
         {currentStep === 1 && (
           <FormST1
             handlePhoneNumberSubmit={handlePhoneNumberSubmit}
-            phoneNumber={handleChange}
+            phoneNumber={phoneNumber}
             handleChange={handleChange}
           />
         )}
