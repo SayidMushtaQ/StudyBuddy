@@ -2,8 +2,11 @@ import React, { useState, useRef } from "react";
 import FormST1 from "../components/auth/signup/form_st1";
 import FormST2 from "../components/auth/signup/form_st2";
 import FormST3 from "../components/auth/signup/form_st3";
-import {handleBackSpaceAndEnterKEY} from '../util/HandleBackSpaceKey'
-import {HandleOtpInput} from '../util/HandleOtpInput'
+import FormST4 from "../components/auth/signup/form_st4";
+import FormST5 from "../components/auth/signup/form_st5";
+import {handleBackSpaceAndEnterKEY} from '../util/HandleBackSpaceKey';
+import {HandleOtpInput} from '../util/HandleOtpInput';
+
 export default function Signup({ onClose }) {
   const [step, setStep] = useState(1);
   const otpBoxRef = useRef([]);
@@ -13,10 +16,13 @@ export default function Signup({ onClose }) {
     country: "",
     state: "",
     district: "",
-    college: "",
     address: "",
     phone: "",
     role: "student",
+    collegeName: "",
+    department: "",
+    year: "",
+    collegeId: "",
   });
 
   const handleChange = (e, index) => {
@@ -29,9 +35,12 @@ export default function Signup({ onClose }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (step === 1) setStep(2);
-    else if (step === 2) setStep(3);
+    if (step < 5) setStep(step + 1);
     else console.log("Final Submission", form, otp);
+  };
+
+  const handleBack = () => {
+    if (step > 1) setStep(step - 1);
   };
 
   return (
@@ -43,7 +52,7 @@ export default function Signup({ onClose }) {
         >
           ×
         </button>
-
+        
         {step === 1 && (
           <FormST1
             form={form}
@@ -51,17 +60,40 @@ export default function Signup({ onClose }) {
             handleChange={handleChange}
           />
         )}
-
+        
         {step === 2 && (
-          <FormST2 form={form} handleSubmit={handleSubmit} setForm={setForm} />
+          <FormST2 
+            form={form} 
+            handleSubmit={handleSubmit} 
+            setForm={setForm}
+            handleBack={handleBack} 
+          />
         )}
+        
         {step === 3 && (
           <FormST3
+            form={form}
+            handleSubmit={handleSubmit}
+            handleChange={handleChange}
+            handleBack={handleBack}
+          />
+        )}
+        
+        {step === 4 && (
+          <FormST4
             otp={otp}
             handleSubmit={handleSubmit}
             handleBackSpaceAndEnterKEY={handleBackSpaceAndEnterKEY}
             handleChange={handleChange}
             otpBoxRef={otpBoxRef}
+            handleBack={handleBack}
+          />
+        )}
+        
+        {step === 5 && (
+          <FormST5
+            handleSubmit={handleSubmit}
+            handleBack={handleBack}
           />
         )}
       </div>

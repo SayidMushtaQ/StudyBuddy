@@ -1,6 +1,7 @@
 import React from "react";
 import { GraduationCap, User } from "lucide-react";
-export default function FormST2({form,handleSubmit,setForm}) {
+
+export default function FormST2({form, handleSubmit, setForm, handleBack}) {
   return (
     <>
       <h2 className="text-3xl font-bold text-blue-800 mb-6 text-center">
@@ -19,7 +20,6 @@ export default function FormST2({form,handleSubmit,setForm}) {
               Student
             </h3>
           </div>
-
           <div
             onClick={() => setForm({ ...form, role: "teacher" })}
             className={`cursor-pointer bg-white rounded-2xl p-6 shadow-md flex flex-col items-center justify-center transition hover:shadow-lg border-2 ${
@@ -32,12 +32,21 @@ export default function FormST2({form,handleSubmit,setForm}) {
             </h3>
           </div>
         </div>
-        <button
-          type="submit"
-          className="w-full bg-blue-600 text-white py-3 rounded-xl shadow-md hover:bg-blue-700"
-        >
-          Next
-        </button>
+        <div className="flex gap-4">
+          <button
+            type="button"
+            onClick={handleBack}
+            className="w-1/3 bg-gray-200 text-gray-800 py-3 rounded-xl shadow-md hover:bg-gray-300"
+          >
+            Back
+          </button>
+          <button
+            type="submit"
+            className="w-2/3 bg-blue-600 text-white py-3 rounded-xl shadow-md hover:bg-blue-700"
+          >
+            Next
+          </button>
+        </div>
       </form>
     </>
   );
