@@ -20,11 +20,10 @@ export const resendOTP = asyncHandler(async (req, res) => {
   console.log(otp);
 
   //   await sendOTP(user.phone, otp);
-
+  console.log(user.otp)
   res.status(200).json(
     new apiResponse(
       200,
-      {success:true},
       "OTP sent successfully"
     )
   );
