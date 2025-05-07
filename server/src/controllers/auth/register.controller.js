@@ -2,7 +2,7 @@ import { asyncHandler } from "../../util/asyncHandler.util.js";
 import { apiResponse } from "../../util/apiResponse.utils.js";
 import { ApiError } from "../../util/apiError.utils.js";
 import { User } from '../../modules/userAuth.model.js';
-import {generateOTP} from '../../util/generateAndSendOTP.util.js'
+import {generateOTP,sendOTP} from '../../util/generateAndSendOTP.util.js'
 
 const register = asyncHandler(async (req, res) => {
   const {
@@ -33,7 +33,7 @@ const register = asyncHandler(async (req, res) => {
     district,
     address,
     phone,
-    role: role || "STUDENT", // Default to student if not specified
+    role: role || "STUDENT", 
     collegeName,
     department,
     year,
@@ -43,14 +43,15 @@ const register = asyncHandler(async (req, res) => {
 
   await newUser.save();
 
-  // await sendOTP(phone, otp);
+  // sendOTP(phone, otp);
   console.log(otp)
+
   res
     .status(201)
     .json(
       new apiResponse(
         201,
-        { Ok: "Ok" },
+        { userID: newUser._id },
         "User registered successfully. Please verify OTP"
       )
     );
