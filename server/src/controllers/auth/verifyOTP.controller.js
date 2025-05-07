@@ -38,7 +38,7 @@ export const verifyOTP = asyncHandler(async (req, res) => {
           jwt_token: token
         }
       },
-      "OTP verified successfully. Registration complete."
+      "OTP verified successfully."
     )
   );
 });
