@@ -19,6 +19,7 @@ export default function NotesApp() {
   const [sortBy, setSortBy] = useState("date"); // 'date' or 'title'
   const [sortOrder, setSortOrder] = useState("desc"); // 'asc' or 'desc'
 
+  console.log(notes)
   // Save notes to localStorage whenever they change
   // useEffect(() => {
   //   localStorage.setItem("notes", JSON.stringify(notes));
