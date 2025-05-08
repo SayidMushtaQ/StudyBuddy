@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState} from "react";
 
 import Sidebar from "../../../components/dashboard/student/ownNotes/sidebar";
 import Writer from '../../../components/dashboard/student/ownNotes/writer'
@@ -12,21 +12,7 @@ const colorOptions = [
 ];
 
 export default function NotesApp() {
-  const [notes, setNotes] = useState(() => {
-    const savedNotes = localStorage.getItem("notes");
-    return savedNotes
-      ? JSON.parse(savedNotes)
-      : [
-          {
-            id: 1,
-            title: "Welcome to Notes App",
-            content:
-              "This is a simple notes taking application. Create, edit, and delete notes as needed.",
-            date: new Date().toISOString(),
-            color: "bg-blue-100",
-          },
-        ];
-  });
+  const [notes, setNotes] = useState([]);
 
   const [activeNoteId, setActiveNoteId] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
@@ -34,9 +20,9 @@ export default function NotesApp() {
   const [sortOrder, setSortOrder] = useState("desc"); // 'asc' or 'desc'
 
   // Save notes to localStorage whenever they change
-  useEffect(() => {
-    localStorage.setItem("notes", JSON.stringify(notes));
-  }, [notes]);
+  // useEffect(() => {
+  //   localStorage.setItem("notes", JSON.stringify(notes));
+  // }, [notes]);
 
   // Get active note
   const activeNote = activeNoteId
@@ -78,7 +64,10 @@ export default function NotesApp() {
       setActiveNoteId(null);
     }
   };
-
+  // Save note
+  const handleSaveNotes = (id)=>{
+    console.log(id)
+  }
   // Filter notes by search term
   const filteredNotes = notes.filter(
     (note) =>
@@ -116,7 +105,7 @@ export default function NotesApp() {
   };
 
   return (
-    <div className="flex flex-col md:flex-row h-[80vh] bg-gradient-to-br from-blue-100 to-purple-200">
+    <div className="flex flex-col md:flex-row h-[80vh]">
       {/* Sidebar */}
       <Sidebar
         searchTerm={searchTerm}
@@ -140,6 +129,8 @@ export default function NotesApp() {
           formatDate={formatDate}
           colorOptions={colorOptions}
           addNewNote={addNewNote}
+          handleSaveNotes={handleSaveNotes}
+          activeNoteId={activeNoteId}
         />
       </div>
     </div>
