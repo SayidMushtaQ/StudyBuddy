@@ -3,7 +3,7 @@ import cors from "cors";
 import { DATA_LIMIT,API_BASE_URL } from "./constants.js";
 import cookieParser from "cookie-parser";
 import fileUpload  from 'express-fileupload'
-
+// import {authenticateUser} from './middlewares/authMiddleware.js'
 const app = express();
 
 app.use(
