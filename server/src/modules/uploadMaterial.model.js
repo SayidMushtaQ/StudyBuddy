@@ -34,9 +34,7 @@ const materialSchema = new mongoose.Schema(
           const validDepartments = [
             "BCA",
             "MCA",
-            "BSc CS",
-            "BSc IT",
-            "MSc IT",
+            "BBA",
             "All Departments"
           ];
           if (v.includes("All Departments")) {
