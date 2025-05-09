@@ -3,7 +3,7 @@ const materialSchema = new mongoose.Schema(
   {
     title: {
       type: String,
-      required: [true, "Material title is required"],
+      required: [true, "Title is required"],
       trim: true
     },
     description: {
@@ -17,62 +17,23 @@ const materialSchema = new mongoose.Schema(
     },
     classYear: {
       type: String,
-      enum: [
-        "All Years",
-        "First Year",
-        "Second Year",
-        "Third Year",
-        "Final Year"
-      ],
-      default: "All Years"
+      required: [true, "Class year is required"]
     },
     departments: {
       type: [String],
-      validate: {
-        validator: function (v) {
-          // Either contains valid departments or 'All Departments'
-          const validDepartments = [
-            "BCA",
-            "MCA",
-            "BBA",
-            "All Departments"
-          ];
-          if (v.includes("All Departments")) {
-            return v.length === 1; // If 'All Departments' is selected, no other should be selected
-          }
-          return v.every(dep => validDepartments.includes(dep));
-        },
-        message: "Invalid department selection"
-      }
+      required: [true, "At least one department must be selected"]
     },
     fileUrl: {
       type: String,
       required: [true, "File URL is required"]
     },
-    fileName: {
+    publicId: {
       type: String,
-      required: [true, "File name is required"]
-    },
-    fileSize: {
-      type: Number,
-      required: [true, "File size is required"]
-    },
-    fileType: {
-      type: String,
-      required: [true, "File type is required"]
+      required: [true, "Cloudinary public ID is required"]
     },
     uploadedBy: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      required: [true, "Uploader information is required"]
-    },
-    createdAt: {
-      type: Date,
-      default: Date.now
-    },
-    updatedAt: {
-      type: Date,
-      default: Date.now
+      ref: "User"
     }
   },
   {

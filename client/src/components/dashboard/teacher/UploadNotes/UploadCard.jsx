@@ -88,21 +88,9 @@ export default function UploadCard({setUploadModalOpen,setSelectedSubject,select
               </label>
             </div>
             <div className="flex items-center space-x-1">
-              <input type="checkbox" id="access-bsc-cs" className="h-3 w-3" />
-              <label htmlFor="access-bsc-cs" className="text-sm">
-                BSc CS
-              </label>
-            </div>
-            <div className="flex items-center space-x-1">
-              <input type="checkbox" id="access-bsc-it" className="h-3 w-3" />
-              <label htmlFor="access-bsc-it" className="text-sm">
-                BSc IT
-              </label>
-            </div>
-            <div className="flex items-center space-x-1">
-              <input type="checkbox" id="access-msc-it" className="h-3 w-3" />
-              <label htmlFor="access-msc-it" className="text-sm">
-                MSc IT
+              <input type="checkbox" id="access-bba" className="h-3 w-3" />
+              <label htmlFor="access-bba" className="text-sm">
+                BBA
               </label>
             </div>
             <div className="flex items-center space-x-1">
@@ -124,7 +112,7 @@ export default function UploadCard({setUploadModalOpen,setSelectedSubject,select
               Drag and drop your file here
             </h4>
             <p className="text-gray-500 mb-2 text-sm">
-              Supported formats: PDF, DOC, PPT, XLS, JPG, MP4
+              Supported formats: PDF
             </p>
             <button className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-1 px-4 rounded-lg transition text-sm">
               Browse Files

@@ -1,6 +1,7 @@
-import { asyncHandler } from "../../util/asyncHandler.util.js";
-import { apiResponse } from "../../util/apiResponse.utils.js";
-import { Note } from "../../modules/notes.model.js";
+import { asyncHandler } from "../../../util/asyncHandler.util.js";
+import { apiResponse } from "../../../util/apiResponse.utils.js";
+import { Note } from "../../../modules/notes.model.js";
+
 export const create = asyncHandler(async (req, res) => {
   const { title,color, content  } = req.body;
   if (!title) {

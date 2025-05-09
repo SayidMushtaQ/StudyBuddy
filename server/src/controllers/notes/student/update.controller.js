@@ -1,7 +1,7 @@
-import { asyncHandler } from "../../util/asyncHandler.util.js";
-import { ApiError } from "../../util/apiError.utils.js";
-import { apiResponse } from "../../util/apiResponse.utils.js";
-import { Note } from "../../modules/notes.model.js";
+import { asyncHandler } from "../../../util/asyncHandler.util.js";
+import { ApiError } from "../../../util/apiError.utils.js";
+import { apiResponse } from "../../../util/apiResponse.utils.js";
+import { Note } from "../../../modules/notes.model.js";
 export const update = asyncHandler(async (req, res) => {
   const { field, value } = req.body;
   const note = await Note.findById(req.params.id);

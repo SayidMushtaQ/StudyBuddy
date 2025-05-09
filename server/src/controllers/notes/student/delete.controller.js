@@ -1,6 +1,6 @@
-import { asyncHandler } from "../../util/asyncHandler.util.js";
-import { apiResponse } from "../../util/apiResponse.utils.js";
-import { Note } from "../../modules/notes.model.js";
+import { asyncHandler } from "../../../util/asyncHandler.util.js";
+import { apiResponse } from "../../../util/apiResponse.utils.js";
+import { Note } from "../../../modules/notes.model.js";
 export const deleteNote = asyncHandler(async (req, res) => {
   const note = await Note.findById(req.params.id);
 
