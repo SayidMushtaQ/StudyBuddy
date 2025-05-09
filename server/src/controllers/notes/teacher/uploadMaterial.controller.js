@@ -5,6 +5,13 @@ import { Material } from "../../../modules/uploadMaterial.model.js";
 import { cloudinary } from "../../../config/cloudinary.config.js";
 
 export const uploadMaterial = asyncHandler(async (req, res) => {
+  const { title,description, subject, classYear,departments } = req.body;
+
+  if (!title || !subject || !classYear || !departments) {
+    throw new ApiError(400, "Title, subject, class year and departments are required");
+  }
+
+
   if (!req.files || !req.files.file) {
     throw new ApiError(400, "No file uploaded");
   }
@@ -15,17 +22,17 @@ export const uploadMaterial = asyncHandler(async (req, res) => {
   }
   const result = await cloudinary.uploader.upload(file.tempFilePath, {
     folder: "teaching_materials",
-    resource_type: "raw"
+    resource_type: "auto"
   });
   const material = await Material.create({
-    title: req.body.title,
-    description: req.body.description || "",
-    subject: req.body.subject,
-    classYear: req.body.classYear,
-    departments: JSON.parse(req.body.departments),
+    title,
+    description: description || "",
+    subject,
+    classYear,
+    departments: JSON.parse(`"${departments}"`),
     fileUrl: result.secure_url,
     publicId: result.public_id,
-    // uploadedBy: req.user.id
+    // uploadedBy: req.user.id 
   });
   res
     .status(201)

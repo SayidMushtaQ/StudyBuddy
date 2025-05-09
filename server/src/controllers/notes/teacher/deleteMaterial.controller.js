@@ -8,9 +8,7 @@ export const deleteMaterial = asyncHandler(async (req, res) => {
   if (!material) {
     throw new ApiError(404, "Material not found");
   }
-  await cloudinary.uploader.destroy(material.publicId, {
-    resource_type: "raw"
-  });
+  await cloudinary.uploader.destroy(material.publicId);
 
   await material.deleteOne();
 
