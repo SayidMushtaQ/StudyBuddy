@@ -11,7 +11,7 @@ import Attendance from './pages/student/Attendance'
 
 import TeacherHome from "./pages/teacher";
 import UploadNotes from "./pages/teacher/UploadNotes";
-import MakeAnnouncement from "./pages/teacher/MakeAnnouncement";
+import MakeAttendance  from "./pages/teacher/MakeAttendance ";
 
 
 function App() {
@@ -28,7 +28,7 @@ function App() {
         <Route path="/teacher" element={<TeacherDashboard />}>
           <Route index element={<TeacherHome />} />
           <Route  path="/teacher/upload-notes" element={<UploadNotes />} />
-          <Route  path="/teacher/make-announcement" element={<MakeAnnouncement />} />
+          <Route  path="/teacher/make-attendance" element={<MakeAttendance />} />
         </Route>
         <Route path="/" element={<LandingPage />} />
       </Routes>
