@@ -35,7 +35,7 @@ export default function Signup({ onClose }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (step < 5) setStep(step + 1);
+    if (step < 4) setStep(step + 1);
     else console.log("Final Submission", form, otp);
   };
 
