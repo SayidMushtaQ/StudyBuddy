@@ -33,6 +33,7 @@ export default function Sidebar() {
         },
       ],
     },
+    {name:"Attendance", icon: <ClipboardList />, to: "/student/attendance"},
   ];
 
   return (
