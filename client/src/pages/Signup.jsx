@@ -9,7 +9,7 @@ import { HandleOtpInput } from "../util/HandleOtpInput";
 import axios from "axios";
 
 export default function Signup({ onClose }) {
-  const [step, setStep] = useState(5);
+  const [step, setStep] = useState(1);
   const otpBoxRef = useRef([]);
   const [otp, setOtp] = useState(new Array(4).fill(""));
   const [form, setForm] = useState({
