@@ -6,7 +6,8 @@ export default function FormST5({ handleSubmit, handleBack }) {
   const canvasRef = useRef(null);
   const [cameraActive, setCameraActive] = useState(false);
   const [imageCaptured, setImageCaptured] = useState(false);
-
+  console.log(videoRef.current);
+  console.log(canvasRef.current);
   const startCamera = async () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ 

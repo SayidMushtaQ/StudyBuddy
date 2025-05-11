@@ -8,7 +8,7 @@ import {handleBackSpaceAndEnterKEY} from '../util/HandleBackSpaceKey';
 import {HandleOtpInput} from '../util/HandleOtpInput';
 
 export default function Signup({ onClose }) {
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(5);
   const otpBoxRef = useRef([]);
   const [otp, setOtp] = useState(new Array(4).fill(""));
   const [form, setForm] = useState({
