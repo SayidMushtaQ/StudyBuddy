@@ -28,23 +28,18 @@ export default function FormST5({ handleSubmit, handleBack, setForm }) {
       const canvas = canvasRef.current;
       const context = canvas.getContext('2d');
       
-      // Set canvas dimensions to match video
       canvas.width = video.videoWidth;
       canvas.height = video.videoHeight;
       
-      // Draw the current video frame to the canvas
       context.drawImage(video, 0, 0, canvas.width, canvas.height);
-      
-      // Get the image data as base64 string
       const imageData = canvas.toDataURL('image/jpeg');
-      
-      // Store the image in the form state
+   
       setForm(prevForm => ({
         ...prevForm,
         userImage: imageData
       }));
       
-      // Stop the camera stream
+
       const stream = video.srcObject;
       if (stream) {
         const tracks = stream.getTracks();
@@ -59,7 +54,6 @@ export default function FormST5({ handleSubmit, handleBack, setForm }) {
 
   const retakeImage = () => {
     setImageCaptured(false);
-    // Remove the image from form state when retaking
     setForm(prevForm => ({
       ...prevForm,
       userImage: null

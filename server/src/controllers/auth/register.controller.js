@@ -16,7 +16,8 @@ const register = asyncHandler(async (req, res) => {
     collegeName,
     department,
     year,
-    collegeId
+    collegeId,
+    userImage
   } = req.body;
 
   const existingUser = await User.findOne({ phone });
@@ -38,6 +39,7 @@ const register = asyncHandler(async (req, res) => {
     department,
     year,
     collegeId,
+    userImage,
     otp: { otp }
   });
 

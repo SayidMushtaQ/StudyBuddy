@@ -23,7 +23,7 @@ export default function Signup({ onClose }) {
     department: "",
     year: "",
     collegeId: "",
-    userImage: null, // Added field to store the captured image
+    userImage: null, 
   });
   
   const handleChange = (e, index) => {
