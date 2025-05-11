@@ -62,7 +62,11 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  userImage: {
+  userImageURL: {
+    type: String,
+    required: true
+  },
+  userImagePublicId: {
     type: String,
     required: true
   },
