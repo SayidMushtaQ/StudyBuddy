@@ -1,13 +1,12 @@
-import React, { useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { Camera } from "lucide-react";
 
-export default function FormST5({ handleSubmit, handleBack }) {
+export default function FormST5({ handleSubmit, handleBack, setForm }) {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const [cameraActive, setCameraActive] = useState(false);
   const [imageCaptured, setImageCaptured] = useState(false);
-  console.log(videoRef.current);
-  console.log(canvasRef.current);
+
   const startCamera = async () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ 
@@ -36,6 +35,15 @@ export default function FormST5({ handleSubmit, handleBack }) {
       // Draw the current video frame to the canvas
       context.drawImage(video, 0, 0, canvas.width, canvas.height);
       
+      // Get the image data as base64 string
+      const imageData = canvas.toDataURL('image/jpeg');
+      
+      // Store the image in the form state
+      setForm(prevForm => ({
+        ...prevForm,
+        userImage: imageData
+      }));
+      
       // Stop the camera stream
       const stream = video.srcObject;
       if (stream) {
@@ -51,6 +59,11 @@ export default function FormST5({ handleSubmit, handleBack }) {
 
   const retakeImage = () => {
     setImageCaptured(false);
+    // Remove the image from form state when retaking
+    setForm(prevForm => ({
+      ...prevForm,
+      userImage: null
+    }));
     startCamera();
   };
 
