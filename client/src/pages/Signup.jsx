@@ -41,7 +41,7 @@ export default function Signup({ onClose }) {
 
   const handleBack = () => {
     if (step > 1) setStep(step - 1);
-  };
+  }; 
 
   return (
     <div className="fixed inset-0 bg-opacity-40 backdrop-blur-sm flex items-center justify-center z-50">
