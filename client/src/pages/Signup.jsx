@@ -63,7 +63,7 @@ export default function Signup({ onClose }) {
         }
       );
       console.log("Response:", res);
-      localStorage.setItem("userId", res.data.user._id);
+      localStorage.setItem("userId", res.data.data.userID);
 
     }
     if (step === 5) {
