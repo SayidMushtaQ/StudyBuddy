@@ -75,7 +75,8 @@ export default function Signup({ onClose }) {
           otp: otp.join(""),
         }
       );
-      console.log("Response:", res);
+      console.log("User verified:", res);
+      
     }
   };
 
