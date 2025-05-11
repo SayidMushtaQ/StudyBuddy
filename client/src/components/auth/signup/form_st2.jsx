@@ -10,9 +10,9 @@ export default function FormST2({form, handleSubmit, setForm, handleBack}) {
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           <div
-            onClick={() => setForm({ ...form, role: "student" })}
+            onClick={() => setForm({ ...form, role: "STUDENT" })}
             className={`cursor-pointer bg-white rounded-2xl p-6 shadow-md flex flex-col items-center justify-center transition hover:shadow-lg border-2 ${
-              form.role === "student" ? "border-blue-600" : "border-transparent"
+              form.role === "STUDENT" ? "border-blue-600" : "border-transparent"
             }`}
           >
             <GraduationCap className="w-8 h-8 text-blue-700" />
@@ -21,9 +21,9 @@ export default function FormST2({form, handleSubmit, setForm, handleBack}) {
             </h3>
           </div>
           <div
-            onClick={() => setForm({ ...form, role: "teacher" })}
+            onClick={() => setForm({ ...form, role: "TEACHER" })}
             className={`cursor-pointer bg-white rounded-2xl p-6 shadow-md flex flex-col items-center justify-center transition hover:shadow-lg border-2 ${
-              form.role === "teacher" ? "border-blue-600" : "border-transparent"
+              form.role === "TEACHER" ? "border-blue-600" : "border-transparent"
             }`}
           >
             <User className="w-8 h-8 text-purple-700" />

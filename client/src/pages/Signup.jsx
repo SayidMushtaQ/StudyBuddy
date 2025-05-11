@@ -19,7 +19,7 @@ export default function Signup({ onClose }) {
     district: "",
     address: "",
     phone: "",
-    role: "student",
+    role: "STUDENT",
     collegeName: "",
     department: "",
     year: "",
