@@ -1,129 +1,29 @@
-import { useRef, useState } from "react";
-import { Camera } from "lucide-react";
+import React from "react";
+import OtpBox from '../OtpBox';
 
-export default function FormST5({ handleSubmit, handleBack, setForm }) {
-  const videoRef = useRef(null);
-  const canvasRef = useRef(null);
-  const [cameraActive, setCameraActive] = useState(false);
-  const [imageCaptured, setImageCaptured] = useState(false);
-
-  const startCamera = async () => {
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({ 
-        video: { facingMode: "user" } 
-      });
-      if (videoRef.current) {
-        videoRef.current.srcObject = stream;
-        setCameraActive(true);
-      }
-    } catch (err) {
-      console.error("Error accessing camera:", err);
-      alert("Unable to access the camera. Please check your permissions.");
-    }
-  };
-
-  const captureImage = () => {
-    if (videoRef.current && canvasRef.current) {
-      const video = videoRef.current;
-      const canvas = canvasRef.current;
-      const context = canvas.getContext('2d');
-      
-      canvas.width = video.videoWidth;
-      canvas.height = video.videoHeight;
-      
-      context.drawImage(video, 0, 0, canvas.width, canvas.height);
-      const imageData = canvas.toDataURL('image/jpeg');
-   
-      setForm(prevForm => ({
-        ...prevForm,
-        userImage: imageData
-      }));
-      
-
-      const stream = video.srcObject;
-      if (stream) {
-        const tracks = stream.getTracks();
-        tracks.forEach(track => track.stop());
-        video.srcObject = null;
-      }
-      
-      setImageCaptured(true);
-      setCameraActive(false);
-    }
-  };
-
-  const retakeImage = () => {
-    setImageCaptured(false);
-    setForm(prevForm => ({
-      ...prevForm,
-      userImage: null
-    }));
-    startCamera();
-  };
-
+export default function FormST5({
+  otp,
+  handleSubmit,
+  handleBackSpaceAndEnterKEY,
+  handleChange,
+  otpBoxRef,
+  handleBack
+}) {
   return (
     <>
       <h2 className="text-3xl font-bold text-blue-800 text-center mb-6">
-        Facial Recognition
+        Verify OTP
       </h2>
-      <p className="text-center mb-6">
-        Please look directly at the camera for identity verification
-      </p>
-      
-      <div className="flex flex-col items-center mb-6">
-        <div className="relative w-full h-64 bg-gray-100 rounded-xl overflow-hidden mb-4">
-          {!cameraActive && !imageCaptured && (
-            <div className="absolute inset-0 flex items-center justify-center">
-              <Camera className="w-12 h-12 text-gray-400" />
-            </div>
-          )}
-          
-          <video 
-            ref={videoRef}
-            className={`w-full h-full object-cover ${!cameraActive ? 'hidden' : ''}`}
-            autoPlay
-            playsInline
-            muted
-          />
-          
-          <canvas 
-            ref={canvasRef}
-            className={`w-full h-full object-cover ${!imageCaptured ? 'hidden' : ''}`}
+      <p className="text-center mb-6">A 4-digit OTP has been sent to your phone</p>
+      <form className="space-y-6" onSubmit={handleSubmit}>
+        <div className="grid grid-cols-4 gap-4">
+          <OtpBox
+            otp={otp}
+            handleBackSpaceAndEnterKEY={handleBackSpaceAndEnterKEY}
+            handleChange={handleChange}
+            otpBoxRef={otpBoxRef}
           />
         </div>
-        
-        {!cameraActive && !imageCaptured && (
-          <button
-            type="button"
-            onClick={startCamera}
-            className="bg-blue-600 text-white px-6 py-2 rounded-lg shadow-md hover:bg-blue-700"
-          >
-            Start Camera
-          </button>
-        )}
-        
-        {cameraActive && (
-          <button
-            type="button"
-            onClick={captureImage}
-            className="bg-green-600 text-white px-6 py-2 rounded-lg shadow-md hover:bg-green-700"
-          >
-            Capture
-          </button>
-        )}
-        
-        {imageCaptured && (
-          <button
-            type="button"
-            onClick={retakeImage}
-            className="bg-yellow-500 text-white px-6 py-2 rounded-lg shadow-md hover:bg-yellow-600"
-          >
-            Retake
-          </button>
-        )}
-      </div>
-      
-      <form onSubmit={handleSubmit} className="space-y-4">
         <div className="flex gap-4">
           <button
             type="button"
@@ -134,14 +34,9 @@ export default function FormST5({ handleSubmit, handleBack, setForm }) {
           </button>
           <button
             type="submit"
-            disabled={!imageCaptured}
-            className={`w-2/3 py-3 rounded-xl shadow-md ${
-              imageCaptured 
-                ? 'bg-blue-600 text-white hover:bg-blue-700' 
-                : 'bg-gray-300 text-gray-500 cursor-not-allowed'
-            }`}
+            className="w-2/3 bg-blue-600 text-white py-3 rounded-xl shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 cursor-pointer"
           >
-            Complete Signup
+            Verify & Continue
           </button>
         </div>
       </form>

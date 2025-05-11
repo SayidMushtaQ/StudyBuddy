@@ -67,7 +67,8 @@ export default function FormST3({form, handleSubmit, handleChange, handleBack}) 
           </button>
           <button
             type="submit"
-            className="w-2/3 bg-blue-600 text-white py-3 rounded-xl shadow-md hover:bg-blue-700"
+            className="w-2/3 bg-blue-600 text-white py-3 rounded-xl shadow-md hover:bg-blue-700 cursor-pointer"
+           
           >
             Next
           </button>

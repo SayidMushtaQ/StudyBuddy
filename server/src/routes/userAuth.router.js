@@ -8,7 +8,7 @@ const router = Router();
 
 router.route('/sign-up').post(register)
 router.route('/verify-otp').post(verifyOTP)
-router.route('/resend-otp').post(resendOTP)
+router.route('/send-otp').post(resendOTP)
 router.route('/login').post(login)
 
 

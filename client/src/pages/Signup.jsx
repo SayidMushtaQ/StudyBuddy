@@ -37,8 +37,9 @@ export default function Signup({ onClose }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("Form data:", form);
     if (step < 5) setStep(step + 1);
-    else {
+    if (step === 4) {
       const res = await axios.post(
         `${import.meta.env.VITE_API_BASE_URL}/auth/sign-up`,
         {
@@ -61,8 +62,7 @@ export default function Signup({ onClose }) {
           },
         }
       );
-       console.log("Success:", res.data);
-      console.log("Final form data:", form);
+      console.log("Response:", res);
     }
   };
 
@@ -108,20 +108,20 @@ export default function Signup({ onClose }) {
 
         {step === 4 && (
           <FormST4
+            handleSubmit={handleSubmit}
+            handleBack={handleBack}
+            setForm={setForm}
+          />
+        )}
+
+        {step === 5 && (
+          <FormST5
             otp={otp}
             handleSubmit={handleSubmit}
             handleBackSpaceAndEnterKEY={handleBackSpaceAndEnterKEY}
             handleChange={handleChange}
             otpBoxRef={otpBoxRef}
             handleBack={handleBack}
-          />
-        )}
-
-        {step === 5 && (
-          <FormST5
-            handleSubmit={handleSubmit}
-            handleBack={handleBack}
-            setForm={setForm} // Pass setForm function to FormST5
           />
         )}
       </div>
