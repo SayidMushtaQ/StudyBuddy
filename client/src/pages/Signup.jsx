@@ -63,6 +63,19 @@ export default function Signup({ onClose }) {
         }
       );
       console.log("Response:", res);
+      localStorage.setItem("userId", res.data.user._id);
+
+    }
+    if (step === 5) {
+      const userId = localStorage.getItem("userId");
+      const res = await axios.post(
+        `${import.meta.env.VITE_API_BASE_URL}/auth/verify-otp`,
+        {
+          userId,
+          otp: otp.join(""),
+        }
+      );
+      console.log("Response:", res);
     }
   };
 
