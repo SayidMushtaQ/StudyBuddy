@@ -141,7 +141,7 @@ export default function FormST4({ handleSubmit, handleBack, setForm }) {
                 : 'bg-gray-300 text-gray-500 cursor-not-allowed'
             }`}
           >
-            Submit & Continue
+            Submit & Verify
           </button>
         </div>
       </form>
