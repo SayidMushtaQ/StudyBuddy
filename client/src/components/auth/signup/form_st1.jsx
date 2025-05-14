@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function FormST1({form, handleSubmit, handleChange}) {
+export default function FormST1({ form, handleSubmit, handleChange }) {
   return (
     <>
       <h2 className="text-3xl font-bold text-blue-800 mb-6 text-center">
@@ -65,14 +65,20 @@ export default function FormST1({form, handleSubmit, handleChange}) {
         </div>
         <div>
           <label className="block text-blue-700 mb-1">Phone Number</label>
-          <input
-            type="tel"
-            name="phone"
-            value={form.phone}
-            onChange={handleChange}
-            className="w-full border border-blue-300 rounded-xl px-4 py-2"
-            required
-          />
+          <div className="flex border border-blue-300 rounded-xl overflow-hidden">
+            <div className="bg-gray-100 flex items-center px-3 text-gray-600 border-r border-blue-300">
+              +91
+            </div>
+            <input
+              type="tel"
+              name="phone"
+              value={form.phone}
+              onChange={handleChange}
+              className="w-full px-4 py-2"
+              placeholder="Enter phone number"
+              required
+            />
+          </div>
         </div>
         <button
           type="submit"

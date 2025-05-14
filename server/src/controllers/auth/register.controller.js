@@ -72,7 +72,7 @@ const register = asyncHandler(async (req, res) => {
 
   await newUser.save();
 
-  sendOTP(phone, otp);
+  // sendOTP(phone, otp);
 
   console.log("OTP generated for verification:", otp);
 

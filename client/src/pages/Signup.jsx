@@ -48,7 +48,7 @@ export default function Signup({ onClose }) {
           state: form.state,
           district: form.district,
           address: form.address,
-          phone: form.phone,
+          phone: `+91${form.phone}`,
           role: form.role,
           collegeName: form.collegeName,
           department: form.department,
