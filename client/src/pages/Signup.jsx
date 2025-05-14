@@ -75,6 +75,10 @@ export default function Signup({ onClose }) {
           otp: otp.join(""),
         }
       );
+      if (res.status === 200) {
+        alert("User verified successfully");
+        onClose();
+      }
       console.log("User verified:", res);
       
     }
