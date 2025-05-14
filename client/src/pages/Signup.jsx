@@ -60,12 +60,11 @@ export default function Signup({ onClose }) {
           headers: {
             "Content-Type": "multipart/form-data",
           },
-          withCredentials: true
+          withCredentials: true,
         }
       );
       console.log("Response:", res);
       localStorage.setItem("userId", res.data.data.userID);
-
     }
     if (step === 5) {
       const userId = localStorage.getItem("userId");
@@ -74,6 +73,12 @@ export default function Signup({ onClose }) {
         {
           userId,
           otp: otp.join(""),
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
         }
       );
       if (res.status === 200) {
@@ -81,7 +86,6 @@ export default function Signup({ onClose }) {
         onClose();
       }
       console.log("User verified:", res);
-      
     }
   };
 
