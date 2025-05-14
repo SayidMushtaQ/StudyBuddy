@@ -26,10 +26,10 @@ export const verifyOTP = asyncHandler(async (req, res) => {
     { expiresIn: "7d" }
   );
   res.cookie("token", token, {
-    httpOnly: false,
+    httpOnly: true,
     secure: false, // Use secure cookies in production: process.env.NODE_ENV === "production"
     maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days in milliseconds
-    sameSite: "strict"
+    sameSite: "lax"
   });
 
   res.status(200).json(
