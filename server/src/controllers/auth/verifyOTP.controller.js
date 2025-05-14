@@ -25,7 +25,7 @@ export const verifyOTP = asyncHandler(async (req, res) => {
     process.env.JWT_SECRET,
     { expiresIn: "7d" }
   );
-  res.cookie("token", token, {
+  res.cookie("auth-token", token, {
     httpOnly: true,
     secure: false, // Use secure cookies in production: process.env.NODE_ENV === "production"
     maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days in milliseconds
