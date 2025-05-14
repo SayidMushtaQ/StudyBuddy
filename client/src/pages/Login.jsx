@@ -3,6 +3,7 @@ import { handleBackSpaceAndEnterKEY } from "../util/HandleBackSpaceKey";
 import { HandleOtpInput } from "../util/HandleOtpInput";
 import FormST1 from "../components/auth/login/form_st1";
 import FormST2 from "../components/auth/login/form_st2";
+import axios from "axios";
 export default function Login({ onClose }) {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [otp, setOtp] = useState(new Array(4).fill(""));
@@ -10,7 +11,7 @@ export default function Login({ onClose }) {
   const otpBoxRef = useRef([]);
 
   const handleChange = (e, index) => {
-    console.log(e.target.value)
+    console.log(e.target.value);
     if (e.target.name === "otp") {
       HandleOtpInput(e, otp, index, setOtp, otpBoxRef);
     } else {
@@ -18,16 +19,44 @@ export default function Login({ onClose }) {
     }
   };
 
-  const handlePhoneNumberSubmit = (e) => {
+  const handlePhoneNumberSubmit = async (e) => {
     e.preventDefault();
     console.log(phoneNumber);
-    setTimeout(() => {
-      setCurrentStep(2); // Move to OTP verification step
-    }, 1000);
+    try {
+      const res = await axios.post(
+        `${import.meta.env.VITE_API_BASE_URL}/auth/login`,
+        { phone: `+91${phoneNumber}` },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log("Response:", res);
+      localStorage.setItem("userId", res.data.data.userID);
+      setCurrentStep(2);
+    } catch (error) {
+      console.error(error.message);
+      return;
+    }
   };
-  const handleOtpSubmit = (e) => {
+  const handleOtpSubmit = async (e) => {
     e.preventDefault();
-    console.log(otp);
+    const userId = localStorage.getItem("userId");
+    const res = await axios.post(
+      `${import.meta.env.VITE_API_BASE_URL}/auth/verify-otp`,
+      {
+        userId,
+        otp: otp.join(""),
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      }
+    );
+    console.log("User verified:", res);
   };
 
   return (
