@@ -7,12 +7,11 @@ import TeacherDashboard from "./layouts/teacher/Dashboard";
 import Notes from "./pages/student/Notes/Index";
 import CreateOwnNotes from "./pages/student/Notes/OwnNotes";
 import ClassNotes from "./pages/student/Notes/ClassNotes";
-import Attendance from './pages/student/Attendance'
 
 import TeacherHome from "./pages/teacher";
 import UploadNotes from "./pages/teacher/UploadNotes";
 import MakeAttendance  from "./pages/teacher/MakeAttendance ";
-
+import SummaryNotes from './pages/student/Notes/SummaryNotes';
 
 function App() {
   return (
@@ -23,7 +22,7 @@ function App() {
           <Route path="/student/notes" element={<Notes />} />
           <Route path="/student/notes/create" element={<CreateOwnNotes />} />
           <Route path="/student/notes/class" element={<ClassNotes />} />
-          <Route path="/student/attendance" element={<Attendance />} />
+          <Route path="/student/notes/summary" element={<SummaryNotes />} />
         </Route>
         <Route path="/teacher" element={<TeacherDashboard />}>
           <Route index element={<TeacherHome />} />

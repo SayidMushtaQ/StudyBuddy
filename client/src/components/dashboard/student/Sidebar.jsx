@@ -7,6 +7,7 @@ import {
   ChevronRight,
   FilePlus,
   ClipboardList,
+  FileText
 } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 
@@ -31,9 +32,13 @@ export default function Sidebar() {
           to: "/student/notes/class",
           icon: <ClipboardList />,
         },
+         {
+          name: "Summary Notes",
+          to: "/student/notes/summary",
+          icon: <FileText />,
+        },
       ],
     },
-    {name:"Attendance", icon: <ClipboardList />, to: "/student/attendance"},
   ];
 
   return (
